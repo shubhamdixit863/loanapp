@@ -24,7 +24,7 @@ FROM ubuntu:latest
 WORKDIR /app
 
 # `boilerplate` should be replaced here as well
-COPY --from=build /src/cmd/web/app .
+COPY --from=build /src/cmd/web/ .
 
 # Exposes port 8090 because our program listens on that port
 EXPOSE 8090
