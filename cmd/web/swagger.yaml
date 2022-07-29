@@ -9,7 +9,7 @@ schemes:
 
 
 definitions:
-  ReqAddCompany:
+  SignupRequest:
     properties:
       first_name:
         description: |-
@@ -47,6 +47,25 @@ definitions:
         x-go-name: password
     type: object
     x-go-package: goswagger/models
+  LoginRequest:
+    properties:
+      email:
+        description: |-
+          Email
+          in: string
+        format: string
+        type: string
+        x-go-name: email
+      password:
+        description: |-
+          Password
+          in: string
+        format: string
+        type: string
+        x-go-name: password
+    type: object
+    x-go-package: goswagger/models
+
 host: 23.92.65.116:8090
 info:
   title: 'Loan App Api Backend'
@@ -62,17 +81,38 @@ paths:
           name: body
           required: true
           schema:
-            $ref: '#/definitions/ReqAddCompany'
+            $ref: '#/definitions/SignupRequest'
           x-go-name: Body
       responses:
         "200":
           description: GetCompany
           schema:
-            $ref: '#/definitions/ReqAddCompany'
+            $ref: '#/definitions/SignupRequest'
         "400":
           description: CommonError
           schema:
-            $ref: '#/definitions/ReqAddCompany'
+            $ref: '#/definitions/SignupRequest'
+  /login:
+    post:
+      description: Signup A User
+      operationId: Login A User
+      parameters:
+        - description: 'name: body'
+          in: body
+          name: body
+          required: true
+          schema:
+            $ref: '#/definitions/LoginRequest'
+          x-go-name: Body
+      responses:
+        "200":
+          description: GetCompany
+          schema:
+            $ref: '#/definitions/LoginRequest'
+        "400":
+          description: CommonError
+          schema:
+            $ref: '#/definitions/LoginRequest'
 
 
 produces:
