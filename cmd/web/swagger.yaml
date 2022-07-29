@@ -47,7 +47,7 @@ definitions:
         x-go-name: password
     type: object
     x-go-package: goswagger/models
-host: localhost:4000
+host: 23.92.65.116:8090
 info:
   title: 'Loan App Api Backend'
   version: 0.0.1
