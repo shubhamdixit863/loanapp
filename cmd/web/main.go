@@ -4,6 +4,7 @@ import (
 	"customerservice/internal/entity"
 	"flag"
 	"fmt"
+	"github.com/joho/godotenv"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 	"gorm.io/gorm/logger"
@@ -33,6 +34,12 @@ func dbConnect(dsn string) (*gorm.DB, error) {
 		return nil, err
 	}
 	return db, nil
+}
+
+func init() {
+
+	godotenv.Load()
+
 }
 
 //Some modify
