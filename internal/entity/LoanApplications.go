@@ -1,6 +1,9 @@
 package entity
 
-import "time"
+import (
+	"gorm.io/gorm"
+	"time"
+)
 
 type LoanApplication struct {
 	FirstName       string    `json:"first_name" gorm:"primaryKey" `
@@ -14,4 +17,8 @@ type LoanApplication struct {
 	LoanNumber      string    `json:"loan_number"`
 	DisbusrseMentId int       `json:"disbusrsement_id"`
 	PanCardImage    string    `json:"pancard_image"`
+}
+
+type LoanApplicationModel struct {
+	Db *gorm.DB
 }

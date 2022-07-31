@@ -55,7 +55,7 @@ func (app *App) UploadUserFormData(w http.ResponseWriter, r *http.Request) {
 		Gender: r.FormValue("gender"), PanCardImage: fileName,
 	}
 
-	result := app.UserModel.Db.Create(&user) // pass pointer of data to Create
+	result := app.LoanApp.Db.Create(&user) // pass pointer of data to Create
 	if result.Error != nil {
 		http.Error(w, result.Error.Error(), http.StatusBadRequest)
 		return
