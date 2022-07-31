@@ -14,9 +14,9 @@ CREATE TABLE `loanapp`.`loan_applications` (
                                                `id` INT NOT NULL,
                                                `first_name` VARCHAR(200) NULL,
                                                `middle_name` VARCHAR(200) NULL,
-                                               `last_name` VARCHAR(200) NULL,
+                                               `sur_name` VARCHAR(200) NULL,
                                                `birthday` VARCHAR(45) NULL,
-                                               `pannumber` VARCHAR(45) NULL,
+                                               `pan_number` VARCHAR(45) NULL,
                                                `gender` VARCHAR(45) NULL,
                                                `user_id` INT NULL,
                                                `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -31,3 +31,7 @@ ADD UNIQUE INDEX `loan_number_UNIQUE` (`loan_number` ASC) VISIBLE;
 
 ALTER TABLE `loanapp`.`loan_applications`
     ADD COLUMN `pancard_image` VARCHAR(200) NULL AFTER `disbursement_id`;
+
+ALTER TABLE `loanapp`.`loan_applications`
+    CHANGE COLUMN `id` `id` INT NOT NULL AUTO_INCREMENT ;
+

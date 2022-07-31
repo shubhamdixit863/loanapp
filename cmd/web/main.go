@@ -66,6 +66,7 @@ func main() {
 		ErrorLog:  errorLog,
 		InfoLog:   infoLog,
 		UserModel: &entity.UserModel{Db: db},
+		LoanApp:   &entity.LoanApplicationModel{Db: db},
 	}
 
 	srv := &http.Server{

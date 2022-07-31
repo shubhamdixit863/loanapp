@@ -3,6 +3,7 @@ package main
 import (
 	"customerservice/cmd/web/models"
 	"customerservice/internal/entity"
+	"customerservice/internal/utils"
 	"encoding/json"
 	"fmt"
 	"github.com/google/uuid"
@@ -49,10 +50,11 @@ func (app *App) UploadUserFormData(w http.ResponseWriter, r *http.Request) {
 	io.Copy(f, file)
 
 	//inserting the user data to the database
+	loanNumber := utils.RandStringBytes(20)
 
 	user := entity.LoanApplication{SurName: r.FormValue("sur_name"), FirstName: r.FormValue("first_name"),
 		MiddleName: r.FormValue("middle_name"), Birthday: r.FormValue("birthday"), PanNumber: r.FormValue("pan_number"),
-		Gender: r.FormValue("gender"), PanCardImage: fileName,
+		Gender: r.FormValue("gender"), PancardImage: fileName, LoanNumber: loanNumber,
 	}
 
 	result := app.LoanApp.Db.Create(&user) // pass pointer of data to Create
@@ -65,7 +67,7 @@ func (app *App) UploadUserFormData(w http.ResponseWriter, r *http.Request) {
 	j, err := json.Marshal(models.Response{
 		Message: "Success",
 		Status:  http.StatusOK,
-		Data:    "SuccessFully Uploaded",
+		Data:    loanNumber,
 	})
 
 	if err != nil {
