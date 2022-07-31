@@ -39,8 +39,9 @@ func (app *App) LoginHAndler(w http.ResponseWriter, r *http.Request) {
 	if check {
 
 		// generate jwt
+		var sharedKey = []byte("sercrethatmaycontainch@r$32chars")
 
-		token, err := jwt.Sign(jwt.HS256, "sharedKey", user, jwt.MaxAge(15*time.Minute))
+		token, err := jwt.Sign(jwt.HS256, sharedKey, user, jwt.MaxAge(15*time.Minute))
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 			return
