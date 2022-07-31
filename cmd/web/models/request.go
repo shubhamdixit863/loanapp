@@ -13,3 +13,12 @@ type SignupRequest struct {
 	Password  string `json:"password"`
 	Phone     string `json:"phone"`
 }
+
+type FormDateRequest struct {
+	FirstName  string `json:"first_name"`
+	SurName    string `json:"sur_name"`
+	MiddleName string `json:"middle_name"`
+	Gender     string `json:"gender"`
+	PanNumber  string `json:"pan_number"`
+	Birthday   string `json:"birthday"`
+}
