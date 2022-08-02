@@ -35,3 +35,17 @@ ALTER TABLE `loanapp`.`loan_applications`
 ALTER TABLE `loanapp`.`loan_applications`
     CHANGE COLUMN `id` `id` INT NOT NULL AUTO_INCREMENT ;
 
+
+CREATE TABLE `loanapp`.`message_auth` (
+                                          `id` INT NOT NULL AUTO_INCREMENT,
+                                          `phone` VARCHAR(45) NULL,
+                                          `created_at` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
+                                          PRIMARY KEY (`id`),
+                                          UNIQUE INDEX `phone_UNIQUE` (`phone` ASC) VISIBLE);
+
+
+ALTER TABLE `loanapp`.`message_auth`
+    ADD COLUMN `otp` VARCHAR(45) NULL AFTER `created_at`,
+ADD COLUMN `last_login` DATETIME NULL AFTER `otp`;
+ADD COLUMN `ip` VARCHAR(45) NULL AFTER `last_login`;
+ADD COLUMN `location` VARCHAR(45) NULL AFTER `ip`;

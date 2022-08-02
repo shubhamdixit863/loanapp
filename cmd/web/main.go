@@ -63,10 +63,10 @@ func main() {
 	errorLog := log.New(os.Stderr, "ERROR\t", log.Ldate|log.Ltime|log.Lshortfile)
 
 	app := &App{
-		ErrorLog:  errorLog,
-		InfoLog:   infoLog,
-		UserModel: &entity.UserModel{Db: db},
-		LoanApp:   &entity.LoanApplicationModel{Db: db},
+		ErrorLog:         errorLog,
+		InfoLog:          infoLog,
+		MessageAuthModel: &entity.MessageAuthModel{Db: db},
+		LoanApp:          &entity.LoanApplicationModel{Db: db},
 	}
 
 	srv := &http.Server{

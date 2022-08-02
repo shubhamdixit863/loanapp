@@ -11,19 +11,7 @@ schemes:
 definitions:
   SignupRequest:
     properties:
-      first_name:
-        description: |-
-          First Name
-           in: string
-        type: string
-        x-go-name: first_name
-      last_name:
-        description: |-
-          Last Name
-          in: string
-        format: string
-        type: string
-        x-go-name: last_name
+
       phone:
         description: |-
           Phone
@@ -31,34 +19,21 @@ definitions:
         format: string
         type: string
         x-go-name: phone
-      email:
-        description: |-
-          Email
-          in: string
-        format: string
-        type: string
-        x-go-name: email
-      password:
-        description: |-
-          Password
-          in: string
-        format: string
-        type: string
-        x-go-name: password
+
     type: object
     x-go-package: goswagger/models
   LoginRequest:
     properties:
-      email:
+      phone:
         description: |-
-          Email
+          Phone
           in: string
         format: string
         type: string
         x-go-name: email
-      password:
+      otp:
         description: |-
-          Password
+          OTP
           in: string
         format: string
         type: string
@@ -66,7 +41,7 @@ definitions:
     type: object
     x-go-package: goswagger/models
 
-host: 23.92.65.116:8090
+host: localhost:4000
 info:
   title: 'Loan App Api Backend'
   version: 0.0.1
@@ -85,7 +60,7 @@ paths:
           x-go-name: Body
       responses:
         "200":
-          description: GetCompany
+          description: Signup
           schema:
             $ref: '#/definitions/SignupRequest'
         "400":

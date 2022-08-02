@@ -1,17 +1,12 @@
 package models
 
-type LoginRequest struct {
-	Email string `json:"email"`
-
-	Password string `json:"password"`
+type SignupRequest struct {
+	Phone string `json:"phone"`
 }
 
-type SignupRequest struct {
-	FirstName string `json:"first_name"`
-	LastName  string `json:"last_name"`
-	Email     string `json:"email"`
-	Password  string `json:"password"`
-	Phone     string `json:"phone"`
+type LoginRequest struct {
+	Phone string `json:"phone"`
+	Otp   string `json:"otp"`
 }
 
 type FormDateRequest struct {
