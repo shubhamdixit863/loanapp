@@ -41,7 +41,7 @@ definitions:
     type: object
     x-go-package: goswagger/models
 
-host: 23.92.65.116:8090
+host: 23.92.65.116:8900
 info:
   title: 'Loan App Api Backend'
   version: 0.0.1
@@ -96,12 +96,12 @@ paths:
       consumes:
         - multipart/form-data
       parameters:
-       - in: header
-         name: token
-         schema:
-         type: string
-         format: uuid
-         required: true
+        - in: header
+          name: token
+          schema:
+          type: string
+          format: uuid
+          required: true
 
         - in: formData
           name: uploadfile
