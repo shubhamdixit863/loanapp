@@ -90,12 +90,19 @@ paths:
             $ref: '#/definitions/LoginRequest'
 
 
-  /formdata:
+  /verified/formdata:
     post:
       summary: Uploads a file.
       consumes:
         - multipart/form-data
       parameters:
+       - in: header
+         name: token
+         schema:
+         type: string
+         format: uuid
+         required: true
+
         - in: formData
           name: uploadfile
           type: file

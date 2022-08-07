@@ -1,0 +1,162 @@
+basePath: "/v1"
+tags:
+  - name: "loanApp"
+    description: "Api Documentation for Loan App"
+schemes:
+  - "http"
+  - "https"
+
+
+
+definitions:
+  SignupRequest:
+    properties:
+
+      phone:
+        description: |-
+          Phone
+          in: string
+        format: string
+        type: string
+        x-go-name: phone
+
+    type: object
+    x-go-package: goswagger/models
+  LoginRequest:
+    properties:
+      phone:
+        description: |-
+          Phone
+          in: string
+        format: string
+        type: string
+        x-go-name: email
+      otp:
+        description: |-
+          OTP
+          in: string
+        format: string
+        type: string
+        x-go-name: password
+    type: object
+    x-go-package: goswagger/models
+
+host: localhost:4000
+info:
+  title: 'Loan App Api Backend'
+  version: 0.0.1
+paths:
+  /signup:
+    post:
+      description: Signup A User
+      operationId: Signup A User
+      parameters:
+        - description: 'name: body'
+          in: body
+          name: body
+          required: true
+          schema:
+            $ref: '#/definitions/SignupRequest'
+          x-go-name: Body
+      responses:
+        "200":
+          description: Signup
+          schema:
+            $ref: '#/definitions/SignupRequest'
+        "400":
+          description: CommonError
+          schema:
+            $ref: '#/definitions/SignupRequest'
+  /login:
+    post:
+      description: Signup A User
+      operationId: Login A User
+      parameters:
+        - description: 'name: body'
+          in: body
+          name: body
+          required: true
+          schema:
+            $ref: '#/definitions/LoginRequest'
+          x-go-name: Body
+      responses:
+        "200":
+          description: SuccessFull Login
+          schema:
+            $ref: '#/definitions/LoginRequest'
+        "400":
+          description: CommonError
+          schema:
+            $ref: '#/definitions/LoginRequest'
+
+
+  /verified/formdata:
+    post:
+      summary: Uploads a file.
+      consumes:
+        - multipart/form-data
+      parameters:
+        - in: header
+          name: token
+          schema:
+          type: string
+          format: uuid
+          required: true
+
+        - in: formData
+          name: uploadfile
+          type: file
+          description: The file to upload.
+
+        - in: formData
+          name: first_name
+          type: string
+          required: true
+          description: First Name.
+
+        - in: formData
+          name: middle_name
+          type: string
+          required: false
+          description: MiddleName .
+
+        - in: formData
+          name: sur_name
+          type: string
+          required: true
+          description: Sur Name.
+
+
+        - in: formData
+          name: gender
+          type: string
+          required: true
+          description: Gender.
+
+        - in: formData
+          name: pan_number
+          type: string
+          required: true
+          description: Pan Number.
+
+        - in: formData
+          name: birthday
+          type: string
+          required: true
+          description: Birthday.
+
+
+      responses:
+        "200":
+          description: SuccessFull Login
+
+
+produces:
+  - application/json
+
+securityDefinitions:
+  apiKey:
+    in: header
+    name: authorization
+    type: apiKey
+swagger: "2.0"
