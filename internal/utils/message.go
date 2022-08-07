@@ -1,15 +1,23 @@
 package utils
 
 import (
+	"fmt"
+	"github.com/joho/godotenv"
 	"github.com/twilio/twilio-go"
 	openapi "github.com/twilio/twilio-go/rest/api/v2010"
 	"os"
 )
 
-func SendOtp(msg string, toNumber string) (bool, error) {
+func init() {
 
-	accountSid := os.Getenv("AC50327d87c2943fd0b4d3aed31505df2e")
-	authToken := os.Getenv("3ef29f24126b76a90543076aaa74bbb4")
+	godotenv.Load()
+
+}
+
+func SendSMS(n string, m string) (bool, error) {
+
+	accountSid := os.Getenv("accountsid")
+	authToken := os.Getenv("authtoken")
 
 	client := twilio.NewRestClientWithParams(twilio.ClientParams{
 		Username: accountSid,
@@ -17,15 +25,18 @@ func SendOtp(msg string, toNumber string) (bool, error) {
 	})
 
 	params := &openapi.CreateMessageParams{}
-	params.SetTo(toNumber)
-	params.SetFrom(os.Getenv("+19786435823"))
-	params.SetBody(msg)
+	params.SetTo(fmt.Sprintf("%q", n))
+	params.SetMessagingServiceSid(os.Getenv("messageserviceid"))
+	params.SetFrom(os.Getenv("fromNumber"))
+	params.SetBody(m)
 
-	_, err := client.Api.CreateMessage(params)
+	message, err := client.Api.CreateMessage(params)
+
 	if err != nil {
+		fmt.Println(err)
 		return false, err
 	} else {
+		fmt.Println(message)
 		return true, err
 	}
-
 }

@@ -93,9 +93,15 @@ func (app *App) SignupHandler(w http.ResponseWriter, r *http.Request) {
 
 	//Send otp here --
 	otp, _ := utils.GenerateOTP(5)
-	_, err = utils.SendOtp(fmt.Sprintf("Your OTP Is %s", otp), request.Phone)
+
+	_, err = utils.SendSMS(request.Phone, fmt.Sprintf("Your CashLo OTP is %s", otp))
 
 	if err != nil {
+
+		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
+		return
+
+	} else {
 
 		// works because destination struct is passed in
 		tx := app.MessageAuthModel.Db.Where("phone = ?", request.Phone).First(&user).Error
@@ -114,9 +120,6 @@ func (app *App) SignupHandler(w http.ResponseWriter, r *http.Request) {
 			app.MessageAuthModel.Db.Model(&entity.MessageAuth{}).Where("phone = ?", request.Phone).Updates(&entity.MessageAuth{Otp: otp, LastLogin: time.Now()})
 		}
 
-	} else {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
 	}
 	js, _ := json.Marshal(models.Response{
 		Message: "Success",
