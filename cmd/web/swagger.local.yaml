@@ -100,7 +100,7 @@ paths:
           name: token
           schema:
           type: string
-          format: uuid
+
           required: true
 
         - in: formData
