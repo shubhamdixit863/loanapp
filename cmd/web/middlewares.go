@@ -2,7 +2,6 @@ package main
 
 import (
 	"encoding/json"
-	"fmt"
 	"net/http"
 	"strings"
 )
@@ -19,8 +18,9 @@ func JwtVerify(next http.Handler) http.Handler {
 			json.NewEncoder(w).Encode("Missing auth token")
 			return
 		} else {
-			json.NewEncoder(w).Encode(fmt.Sprintf("Token found. Value %s", header))
+			//json.NewEncoder(w).Encode(fmt.Sprintf("Token found. Value %s", header))
+			next.ServeHTTP(w, r)
 		}
-		next.ServeHTTP(w, r)
+
 	})
 }
