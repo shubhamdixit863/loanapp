@@ -21,9 +21,9 @@ RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -a -installsuffix cgo -o app 
 # Moving the binary to the 'final Image' to make it smaller
 FROM ubuntu:latest
 
-# Debian stretch based container
-RUN curl -ks 'https://cert.host.server/ssl_certs/EnterpriseRootCA.crt' -o '/usr/local/share/ca-certificates/EnterpriseRootCA.crt'
-RUN /usr/sbin/update-ca-certificates
+RUN openssl s_client -showcerts -connect registry-1.docker.io:443 </dev/null 2>/dev/null|openssl x509 -outform PEM >ca.crt
+RUN sudo cp ca.crt /etc/docker/certs.d/registry-1.docker.io/ca.crt
+RUN cat ca.crt | sudo tee -a /etc/ssl/certs/ca-certificates.crt
 
 WORKDIR /app
 
