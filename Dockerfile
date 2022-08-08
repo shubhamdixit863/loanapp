@@ -22,7 +22,7 @@ RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -a -installsuffix cgo -o app 
 FROM ubuntu:latest
 
 RUN apt-get update
-RUN update-ca-certificates
+RUN apt update-ca-certificates
 
 WORKDIR /app
 
