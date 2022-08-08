@@ -34,17 +34,18 @@ func (app *App) LoginHAndler(w http.ResponseWriter, r *http.Request) {
 	tx := app.MessageAuthModel.Db.Where("phone = ?", request.Phone).First(&user)
 
 	if !errors.Is(tx.Error, gorm.ErrRecordNotFound) {
-		v := "2014-05-03 20:57 UTC"
-		then, err := time.Parse(timeFormat, v)
-		if err != nil {
-			fmt.Println(err)
-			return
-		}
-		duration := time.Since(then)
+		/*
+			then, err := time.Parse(timeFormat, user.LastLogin.String())
+			if err != nil {
+				fmt.Println(err)
+				return
+			}
+		*/
+		duration := time.Since(user.LastLogin)
 		fmt.Println(duration.Minutes())
 
 		//Check for otp as well
-		if request.Otp == user.Otp && duration.Minutes() < 1 {
+		if request.Otp == user.Otp && duration.Minutes() < 10 {
 			// generate jwt
 			var sharedKey = []byte("sercrethatmaycontainch@r$32chars")
 
