@@ -17,3 +17,8 @@ type FormDateRequest struct {
 	PanNumber  string `json:"pan_number"`
 	Birthday   string `json:"birthday"`
 }
+
+type AdminLoginRequest struct {
+	Username string `json:"username"`
+	Password string `json:"password"`
+}

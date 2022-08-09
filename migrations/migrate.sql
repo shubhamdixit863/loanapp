@@ -49,3 +49,16 @@ ALTER TABLE `loanapp`.`message_auth`
 ADD COLUMN `last_login` DATETIME NULL AFTER `otp`;
 ADD COLUMN `ip` VARCHAR(45) NULL AFTER `last_login`;
 ADD COLUMN `location` VARCHAR(45) NULL AFTER `ip`;
+
+
+
+CREATE TABLE `loanapp`.`backend_users` (
+                                           `id` INT NOT NULL AUTO_INCREMENT,
+                                           `username` VARCHAR(45) NULL,
+                                           `password` VARCHAR(45) NULL,
+                                            `role`    VARCHAR(10) NOT NULL ,
+                                           `last_login` DATETIME NULL,
+                                           `created_at` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
+                                           PRIMARY KEY (`id`),
+                                           UNIQUE INDEX `username_UNIQUE` (`username` ASC) VISIBLE);
+

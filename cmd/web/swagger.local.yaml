@@ -22,6 +22,26 @@ definitions:
 
     type: object
     x-go-package: goswagger/models
+  AdminLoginRequest:
+    properties:
+
+      username:
+        description: |-
+          Username
+          in: string
+        format: string
+        type: string
+        x-go-name: phone
+      password:
+        description: |-
+          Password
+          in: string
+        format: string
+        type: string
+        x-go-name: phone
+
+    type: object
+    x-go-package: goswagger/models
   LoginRequest:
     properties:
       phone:
@@ -89,6 +109,28 @@ paths:
           schema:
             $ref: '#/definitions/LoginRequest'
 
+  /admin/login:
+    post:
+      description: Login Admin
+      operationId: Login Admin
+      parameters:
+        - description: 'name: body'
+          in: body
+          name: body
+          required: true
+          schema:
+            $ref: '#/definitions/AdminLoginRequest'
+          x-go-name: Body
+      responses:
+        "200":
+          description: SuccessFull Login
+          schema:
+            $ref: '#/definitions/AdminLoginRequest'
+        "400":
+          description: CommonError
+          schema:
+            $ref: '#/definitions/AsdminLoginRequest'
+
 
   /verified/formdata:
     post:
@@ -148,7 +190,7 @@ paths:
 
       responses:
         "200":
-          description: SuccessFull Login
+          description: SuccessFully Created
 
 
 produces:

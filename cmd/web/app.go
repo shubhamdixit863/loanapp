@@ -10,4 +10,5 @@ type App struct {
 	InfoLog          *log.Logger
 	MessageAuthModel *entity.MessageAuthModel
 	LoanApp          *entity.LoanApplicationModel
+	BackendUsers     *entity.BackendUsersModel
 }

@@ -6,6 +6,7 @@ import (
 )
 
 type LoanApplication struct {
+	Id             int       `json:"id" gorm:"primaryKey"`
 	FirstName      string    `json:"first_name" gorm:"primaryKey" `
 	SurName        string    `json:"sur_name"`
 	MiddleName     string    `json:"middle_name"`

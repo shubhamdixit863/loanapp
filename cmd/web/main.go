@@ -67,6 +67,7 @@ func main() {
 		InfoLog:          infoLog,
 		MessageAuthModel: &entity.MessageAuthModel{Db: db},
 		LoanApp:          &entity.LoanApplicationModel{Db: db},
+		BackendUsers:     &entity.BackendUsersModel{Db: db},
 	}
 
 	srv := &http.Server{
