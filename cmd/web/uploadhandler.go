@@ -36,10 +36,10 @@ func (app *App) UploadUserFormData(w http.ResponseWriter, r *http.Request) {
 
 	uuidWithHyphen := uuid.New()
 
-	uuid := strings.Replace(uuidWithHyphen.String(), "-", "", -1)
+	uuidGenerated := strings.Replace(uuidWithHyphen.String(), "-", "", -1)
 	fileExtension := strings.Split(handler.Filename, ".")[1]
 
-	fileName := fmt.Sprintf("%s%s%s", parent, "/uploads/", uuid+"."+fileExtension)
+	fileName := fmt.Sprintf("%s%s%s", parent, "/uploads/", uuidGenerated+"."+fileExtension)
 
 	f, err := os.OpenFile(fileName, os.O_WRONLY|os.O_CREATE, 0666)
 	if err != nil {
@@ -52,9 +52,11 @@ func (app *App) UploadUserFormData(w http.ResponseWriter, r *http.Request) {
 	//inserting the user data to the database
 	loanNumber := utils.RandStringBytes(20)
 
+	//Splitting the file name
+
 	user := entity.LoanApplication{SurName: r.FormValue("sur_name"), FirstName: r.FormValue("first_name"),
 		MiddleName: r.FormValue("middle_name"), Birthday: r.FormValue("birthday"), PanNumber: r.FormValue("pan_number"),
-		Gender: r.FormValue("gender"), PancardImage: fileName, LoanNumber: loanNumber,
+		Gender: r.FormValue("gender"), PancardImage: fmt.Sprintf("%s%s", "uploads/", strings.Split(fileName, "uploads/")[1]), LoanNumber: loanNumber,
 	}
 
 	result := app.LoanApp.Db.Create(&user) // pass pointer of data to Create

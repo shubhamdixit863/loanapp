@@ -130,6 +130,18 @@ paths:
           description: CommonError
           schema:
             $ref: '#/definitions/AsdminLoginRequest'
+  /admin/loandata:
+    get:
+      description: Get Loan Applications
+      operationId: Login Admin
+
+      responses:
+        "200":
+          description: Loan Applications
+
+        "400":
+          description: CommonError
+
 
 
   /verified/formdata:

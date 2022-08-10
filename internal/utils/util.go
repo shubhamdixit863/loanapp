@@ -1,6 +1,7 @@
 package utils
 
 import (
+	"github.com/google/uuid"
 	"golang.org/x/crypto/bcrypt"
 	"math/rand"
 	"net/http"
@@ -20,11 +21,10 @@ func CheckPasswordHash(password, hash string) bool {
 const letterBytes = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
 
 func RandStringBytes(n int) string {
-	b := make([]byte, n)
-	for i := range b {
-		b[i] = letterBytes[rand.Intn(len(letterBytes))]
-	}
-	return strings.ToUpper(string(b))
+	uuidWithHyphen := uuid.New()
+
+	uuidGenerated := strings.Replace(uuidWithHyphen.String(), "-", "", -1)
+	return strings.ToUpper(string(uuidGenerated))
 }
 
 func GetIP(r *http.Request) string {

@@ -64,3 +64,18 @@ func (app *App) adminLogin(w http.ResponseWriter, r *http.Request) {
 	}
 
 }
+
+func (app *App) GetLoanApplicationsAdmin(w http.ResponseWriter, r *http.Request) {
+	var loanApps []entity.LoanApplication
+	_ = app.LoanApp.Db.Find(&loanApps)
+
+	w.Header().Set("Content-Type", "application/json")
+	js, err := json.Marshal(loanApps)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	w.Write(js)
+
+}

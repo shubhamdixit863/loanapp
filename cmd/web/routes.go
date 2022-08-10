@@ -33,6 +33,10 @@ func (app *App) registerroutes() *mux.Router {
 	sh1 := middleware.Redoc(opts1, nil)
 	r.Handle("/docs1", sh1)
 
+	//Serving static content
+	fs := http.FileServer(http.Dir("../../uploads/"))
+	r.PathPrefix("/uploads/").Handler(http.StripPrefix("/uploads/", fs))
+
 	r.HandleFunc("/v1/health", app.HealthcheckHandler).Methods("GET")
 	r.HandleFunc("/v1/login", app.LoginHAndler).Methods("POST")
 	r.HandleFunc("/v1/signup", app.SignupHandler).Methods("POST")
@@ -43,6 +47,7 @@ func (app *App) registerroutes() *mux.Router {
 	adminRoutes := r.PathPrefix("/v1/admin").Subrouter()
 
 	adminRoutes.HandleFunc("/login", app.adminLogin).Methods("POST")
+	adminRoutes.HandleFunc("/loandata", app.GetLoanApplicationsAdmin).Methods("GET")
 
 	return r
 
