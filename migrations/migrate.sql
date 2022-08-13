@@ -68,4 +68,5 @@ CREATE TABLE `loanapp`.`user_contacts` (
                                            `contacts` LONGTEXT NULL,
                                            `created_at` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
                                            PRIMARY KEY (`id`));
-
+ALTER TABLE `loanapp`.`loan_applications`
+    CHANGE COLUMN `status` `status` ENUM('pending', 'success', 'failed', 'applied') NULL DEFAULT NULL ;

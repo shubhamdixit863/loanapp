@@ -193,6 +193,26 @@ paths:
         "400":
           description: CommonError
 
+  /verified/loanstatus:
+    get:
+      description: GETS the loan status of the user ,call this api before clicking on Apply to Loan  if data==0 it means show the upload pan image screen  if data==1     show contact upload screen ,if data==2 it means can't apply for loan as already applied for loan
+      operationId: Upload Contacts Of User
+      parameters:
+        - in: header
+          name: token
+          schema:
+          type: string
+          format: string
+          required: true
+
+
+      responses:
+        "200":
+          description: Loan Applications
+
+        "400":
+          description: CommonError
+
 
 
   /verified/formdata:

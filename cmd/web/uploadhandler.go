@@ -5,8 +5,10 @@ import (
 	"customerservice/internal/entity"
 	"customerservice/internal/utils"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"github.com/google/uuid"
+	"gorm.io/gorm"
 	"io"
 	"log"
 	"net/http"
@@ -70,6 +72,7 @@ func (app *App) UploadUserFormData(w http.ResponseWriter, r *http.Request) {
 		MiddleName: r.FormValue("middle_name"), Birthday: r.FormValue("birthday"), PanNumber: r.FormValue("pan_number"),
 		Gender: r.FormValue("gender"), PancardImage: fmt.Sprintf("%s%s", "uploads/", strings.Split(fileName, "uploads/")[1]), LoanNumber: loanNumber,
 		UserId: atoi,
+		Status: "applied",
 	}
 
 	result := app.LoanApp.Db.Create(&user) // pass pointer of data to Create
@@ -94,6 +97,39 @@ func (app *App) UploadUserFormData(w http.ResponseWriter, r *http.Request) {
 
 }
 
+func (app *App) CheckLoanStatusHandler(w http.ResponseWriter, r *http.Request) {
+	var header = r.Header.Get("token")
+	var loanApplication entity.LoanApplication
+	status := 2
+
+	claims, err := utils.DecodeJwt(header)
+	atoi, err := strconv.Atoi(claims["id"].(string))
+	if err != nil {
+		http.Error(w, "Jwt Parse Error", http.StatusBadRequest)
+		return
+	}
+	tx := app.LoanApp.Db.First(&loanApplication, "id = ?", atoi)
+
+	if errors.Is(tx.Error, gorm.ErrRecordNotFound) {
+		//
+		status = 0
+
+	} else if loanApplication.Status == "applied" {
+
+		status = 1
+	}
+
+	js, _ := json.Marshal(models.Response{
+		Message: "Success",
+		Status:  200,
+		Data:    status,
+	})
+
+	w.Header().Set("Content-Type", "application/json")
+	w.Write(js)
+
+}
+
 func (app *App) ContactUploadHandler(w http.ResponseWriter, r *http.Request) {
 	var request models.UploadContacts
 
@@ -109,6 +145,11 @@ func (app *App) ContactUploadHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	_ = app.UserContactModel.Db.Create(&usercontact)
+
+	// Updating the LoanApp table status to pending as well
+
+	// Update with conditions
+	app.LoanApp.Db.Model(&entity.LoanApplication{}).Where("id = ?", request.LoanId).Update("status", "pending")
 
 	js, _ := json.Marshal(models.Response{
 		Message: "Success",

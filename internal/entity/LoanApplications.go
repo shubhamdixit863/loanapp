@@ -18,6 +18,7 @@ type LoanApplication struct {
 	LoanNumber     string    `json:"loan_number"`
 	DisbursementId int       `json:"disbursement_id"`
 	PancardImage   string    `json:"pancard_image"`
+	Status         string    `json:"status"`
 }
 
 // TableName overrides the table name used by User to `profiles`
