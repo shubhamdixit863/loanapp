@@ -43,6 +43,7 @@ func (app *App) registerroutes() *mux.Router {
 	formdata := r.PathPrefix("/v1/verified").Subrouter()
 	formdata.Use(JwtVerify)
 	formdata.HandleFunc("/formdata", app.UploadUserFormData).Methods("POST")
+	formdata.HandleFunc("/contactupload", app.ContactUploadHandler).Methods("POST")
 
 	adminRoutes := r.PathPrefix("/v1/admin").Subrouter()
 

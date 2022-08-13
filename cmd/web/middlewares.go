@@ -1,6 +1,7 @@
 package main
 
 import (
+	"customerservice/internal/utils"
 	"encoding/json"
 	"net/http"
 	"strings"
@@ -18,7 +19,13 @@ func JwtVerify(next http.Handler) http.Handler {
 			json.NewEncoder(w).Encode("Missing auth token")
 			return
 		} else {
-			//json.NewEncoder(w).Encode(fmt.Sprintf("Token found. Value %s", header))
+
+			_, err := utils.ValidateToken(header)
+			if err != nil {
+				json.NewEncoder(w).Encode("Not a Valid token")
+				return
+			}
+
 			next.ServeHTTP(w, r)
 		}
 

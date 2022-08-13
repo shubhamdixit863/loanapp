@@ -12,17 +12,29 @@ import (
 	"net/http"
 	"os"
 	"path/filepath"
+	"strconv"
 	"strings"
 )
 
 func (app *App) UploadUserFormData(w http.ResponseWriter, r *http.Request) {
+	var header = r.Header.Get("token")
 
-	log.Println()
+	claims, err := utils.DecodeJwt(header)
+	atoi, err := strconv.Atoi(claims["id"].(string))
+	if err != nil {
+		http.Error(w, "Jwt Parse Error", http.StatusBadRequest)
+		return
+	}
 
+	if err != nil {
+		log.Println(err)
+	}
+	fmt.Println(claims)
 	path, err := os.Getwd()
 	if err != nil {
 		log.Println(err)
 	}
+
 	parent := filepath.Dir(filepath.Dir(path))
 	fmt.Println(parent)
 
@@ -57,6 +69,7 @@ func (app *App) UploadUserFormData(w http.ResponseWriter, r *http.Request) {
 	user := entity.LoanApplication{SurName: r.FormValue("sur_name"), FirstName: r.FormValue("first_name"),
 		MiddleName: r.FormValue("middle_name"), Birthday: r.FormValue("birthday"), PanNumber: r.FormValue("pan_number"),
 		Gender: r.FormValue("gender"), PancardImage: fmt.Sprintf("%s%s", "uploads/", strings.Split(fileName, "uploads/")[1]), LoanNumber: loanNumber,
+		UserId: atoi,
 	}
 
 	result := app.LoanApp.Db.Create(&user) // pass pointer of data to Create
@@ -69,7 +82,7 @@ func (app *App) UploadUserFormData(w http.ResponseWriter, r *http.Request) {
 	j, err := json.Marshal(models.Response{
 		Message: "Success",
 		Status:  http.StatusOK,
-		Data:    loanNumber,
+		Data:    user.Id,
 	})
 
 	if err != nil {
@@ -78,5 +91,28 @@ func (app *App) UploadUserFormData(w http.ResponseWriter, r *http.Request) {
 	}
 
 	w.Write(j)
+
+}
+
+func (app *App) ContactUploadHandler(w http.ResponseWriter, r *http.Request) {
+	var request models.UploadContacts
+	var usercontact entity.UserContactModel
+
+	err := json.NewDecoder(r.Body).Decode(&request)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
+	}
+
+	_ = app.UserContactModel.Db.Create(&usercontact)
+
+	js, _ := json.Marshal(models.Response{
+		Message: "Success",
+		Status:  200,
+		Data:    "Loan Application Success",
+	})
+
+	w.Header().Set("Content-Type", "application/json")
+	w.Write(js)
 
 }

@@ -11,4 +11,5 @@ type App struct {
 	MessageAuthModel *entity.MessageAuthModel
 	LoanApp          *entity.LoanApplicationModel
 	BackendUsers     *entity.BackendUsersModel
+	UserContactModel *entity.UserContactModel
 }

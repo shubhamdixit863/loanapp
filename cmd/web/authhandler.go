@@ -7,10 +7,10 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"github.com/kataras/jwt"
 	"gorm.io/gorm"
 	"log"
 	"net/http"
+	"strconv"
 	"time"
 )
 
@@ -46,10 +46,7 @@ func (app *App) LoginHAndler(w http.ResponseWriter, r *http.Request) {
 
 		//Check for otp as well
 		if request.Otp == user.Otp && duration.Minutes() < 10 {
-			// generate jwt
-			var sharedKey = []byte("sercrethatmaycontainch@r$32chars")
-
-			token, err := jwt.Sign(jwt.HS256, sharedKey, user, jwt.MaxAge(15*time.Minute))
+			token, err := utils.GenerateToken(strconv.Itoa(user.Id))
 			if err != nil {
 				http.Error(w, err.Error(), http.StatusInternalServerError)
 				return

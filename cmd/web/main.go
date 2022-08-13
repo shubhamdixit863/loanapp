@@ -68,6 +68,7 @@ func main() {
 		MessageAuthModel: &entity.MessageAuthModel{Db: db},
 		LoanApp:          &entity.LoanApplicationModel{Db: db},
 		BackendUsers:     &entity.BackendUsersModel{Db: db},
+		UserContactModel: &entity.UserContactModel{Db: db},
 	}
 
 	srv := &http.Server{

@@ -62,3 +62,10 @@ CREATE TABLE `loanapp`.`backend_users` (
                                            PRIMARY KEY (`id`),
                                            UNIQUE INDEX `username_UNIQUE` (`username` ASC) VISIBLE);
 
+CREATE TABLE `loanapp`.`user_contacts` (
+                                           `id` INT NOT NULL AUTO_INCREMENT,
+                                           `loan_id` INT NULL,
+                                           `contacts` LONGTEXT NULL,
+                                           `created_at` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
+                                           PRIMARY KEY (`id`));
+

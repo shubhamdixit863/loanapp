@@ -22,3 +22,8 @@ type AdminLoginRequest struct {
 	Username string `json:"username"`
 	Password string `json:"password"`
 }
+
+type UploadContacts struct {
+	LoanId   int    `json:"loan_id"`
+	Contacts string `json:"contacts"`
+}
