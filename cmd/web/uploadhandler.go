@@ -96,12 +96,16 @@ func (app *App) UploadUserFormData(w http.ResponseWriter, r *http.Request) {
 
 func (app *App) ContactUploadHandler(w http.ResponseWriter, r *http.Request) {
 	var request models.UploadContacts
-	var usercontact entity.UserContactModel
 
 	err := json.NewDecoder(r.Body).Decode(&request)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
+	}
+
+	usercontact := entity.UserContact{
+		Contacts: request.Contacts,
+		LoanId:   request.LoanId,
 	}
 
 	_ = app.UserContactModel.Db.Create(&usercontact)
